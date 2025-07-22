@@ -1,10 +1,14 @@
-import AvailableMeals from "../components/AvailableMeals";
-import Cart from "../components/Cart";
-import Checkout from "../components/Checkout.jsx";
-import Modal from "../components/Modal.jsx";
-import Success from "../components/Success.jsx";
-import logoImg from "./assets/logo.jpg";
-import { useState } from "react";
+import AvailableMeals from '../components/AvailableMeals';
+import Cart from '../components/Cart';
+import Checkout from '../components/Checkout.jsx';
+import Header from '../components/Header.jsx';
+import Meals from '../components/Meals.jsx';
+import Modal from '../components/Modal.jsx';
+import Success from '../components/Success.jsx';
+import logoImg from './assets/logo.jpg';
+import { useState } from 'react';
+import { CartContextProvider } from './store/CartContext.jsx';
+import { UserProgressContextProvider } from './store/UserProgressContext.jsx';
 
 function App() {
   const [userMeals, setUserMeals] = useState([]);
@@ -15,14 +19,14 @@ function App() {
   function handleSelectMeal(selectedMeal) {
     setUserMeals((prevMeals) => {
       const existingMeal = prevMeals.find(
-        (meal) => meal.id === selectedMeal.id,
+        (meal) => meal.id === selectedMeal.id
       );
 
       if (existingMeal) {
         return prevMeals.map((meal) =>
           meal.id === selectedMeal.id
             ? { ...meal, quantity: meal.quantity + 1 }
-            : meal,
+            : meal
         );
       }
 
@@ -33,8 +37,8 @@ function App() {
   function handleIncreaseQuantity(mealId) {
     setUserMeals((prevMeals) =>
       prevMeals.map((meal) =>
-        meal.id === mealId ? { ...meal, quantity: meal.quantity + 1 } : meal,
-      ),
+        meal.id === mealId ? { ...meal, quantity: meal.quantity + 1 } : meal
+      )
     );
   }
 
@@ -43,11 +47,9 @@ function App() {
       (prevMeals) =>
         prevMeals
           .map((meal) =>
-            meal.id === mealId
-              ? { ...meal, quantity: meal.quantity - 1 }
-              : meal,
+            meal.id === mealId ? { ...meal, quantity: meal.quantity - 1 } : meal
           )
-          .filter((meal) => meal.quantity > 0), // remove if quantity is 0
+          .filter((meal) => meal.quantity > 0) // remove if quantity is 0
     );
   }
 
@@ -92,7 +94,7 @@ function App() {
         </Modal>
       )}
 
-      <header id="main-header">
+      {/* <header id="main-header">
         <div id="title">
           <img src={logoImg} alt="Stylized globe" />
           <h1>REACTFOOD</h1>
@@ -103,10 +105,19 @@ function App() {
         >
           Cart ({userMeals.reduce((sum, meal) => sum + meal.quantity, 0)})
         </button>
-      </header>
-      <main>
+      </header> */}
+      <UserProgressContextProvider>
+        <CartContextProvider>
+          <Header />
+          <Meals />
+          <Cart />
+          <Checkout />
+        </CartContextProvider>
+      </UserProgressContextProvider>
+
+      {/* <main>
         <AvailableMeals onSelectMeal={handleSelectMeal} />
-      </main>
+      </main> */}
     </>
   );
 }
