@@ -1,4 +1,5 @@
 Here's a simple and clear `README.md` template for your **React Food Order App** — you can customize it to your style or project name.
+This is just a practise.
 
 ---
 
