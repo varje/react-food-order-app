@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import path from 'path';
 
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -15,8 +16,9 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
+// API routes
 app.get('/api/meals', async (req, res) => {
-  console.log('GET /meals called');
+  console.log('GET /api/meals called');
   const meals = await fs.readFile('./data/available-meals.json', 'utf8');
   res.json(JSON.parse(meals));
 });
@@ -59,18 +61,28 @@ app.post('/api/orders', async (req, res) => {
   res.status(201).json({ message: 'Order created!' });
 });
 
-app.use((req, res) => {
+// Serve static files (React build)
+app.use(express.static(path.resolve('public')));
+
+// SPA fallback — serve index.html for any non-API route not matched by static files
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api/')) {
+    return res.sendFile(path.resolve('public', 'index.html'));
+  }
+  next();
+});
+
+// CORS preflight OPTIONS handling
+app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
-
-  res.status(404).json({ message: 'Not found' });
+  next();
 });
 
-app.use(express.static('public'));
-
+// 404 handler (for anything else)
 app.use((req, res) => {
-  res.sendFile(path.resolve('public', 'index.html'));
+  res.status(404).json({ message: 'Not found' });
 });
 
 const PORT = process.env.PORT || 5001;
