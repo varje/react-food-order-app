@@ -62,7 +62,7 @@ app.post('/api/orders', async (req, res) => {
 });
 
 // Serve static files (React build)
-app.use(express.static(path.resolve('public')));
+// app.use(express.static(path.resolve('public')));
 
 // SPA fallback — serve index.html for any non-API route not matched by static files
 app.use((req, res, next) => {
