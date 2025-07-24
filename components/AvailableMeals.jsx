@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../src/config.js";
 import Meals from "./Meals.jsx";
 import { useState, useEffect } from "react";
 
@@ -6,7 +7,7 @@ export default function AvailableMeals({ onSelectMeal }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://varje.github.io/react-food-order-app/meals")
+    fetch(`${API_BASE_URL}/meals`)
       .then((res) => res.json())
       .then((data) => {
         setMeals(data);

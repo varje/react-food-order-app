@@ -8,6 +8,7 @@ import userProgressContex from '../src/store/UserProgressContext';
 import useHttp from '../src/hooks/useHttp';
 import Error from './Error';
 import { useActionState } from 'react';
+import { API_BASE_URL } from "../src/config.js";
 
 const requestConfig = {
   method: 'POST',
@@ -20,7 +21,7 @@ export default function Checkout() {
   const userProgressCtx = useContext(userProgressContex);
 
   const { data, error, sendRequest, clearData } = useHttp(
-    'https://varje.github.io/react-food-order-app/orders',
+    `${API_BASE_URL}/orders`,
     requestConfig
   );
 
