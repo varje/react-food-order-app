@@ -1,5 +1,6 @@
 {
   "name": "food-order",
+  "homepage": "https://varje.github.io/react-food-order-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
