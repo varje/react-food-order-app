@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import Modal from './Modal';
 import CartContext from '../src/store/CartContext';
 import { currencyFormatter } from '../src/util/formatting';
-import Input from './UI/INput';
+import Input from './UI/Input';
 import Button from './UI/Button';
 import userProgressContex from '../src/store/UserProgressContext';
 import useHttp from '../src/hooks/useHttp';
@@ -20,7 +20,7 @@ export default function Checkout() {
   const userProgressCtx = useContext(userProgressContex);
 
   const { data, error, sendRequest, clearData } = useHttp(
-    'http://localhost:3000/orders',
+    'https://varje.github.io/react-food-order-app/orders',
     requestConfig
   );
 
