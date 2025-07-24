@@ -14,9 +14,9 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
 
 app.get('/meals', async (req, res) => {
+  console.log('GET /meals called');
   const meals = await fs.readFile('./data/available-meals.json', 'utf8');
   res.json(JSON.parse(meals));
 });
@@ -66,6 +66,8 @@ app.use((req, res) => {
 
   res.status(404).json({ message: 'Not found' });
 });
+
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
