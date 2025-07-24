@@ -6,7 +6,7 @@ export default function AvailableMeals({ onSelectMeal }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/meals")
+    fetch("https://varje.github.io/react-food-order-app/meals")
       .then((res) => res.json())
       .then((data) => {
         setMeals(data);
