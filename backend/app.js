@@ -15,13 +15,13 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.get('/meals', async (req, res) => {
+app.get('/api/meals', async (req, res) => {
   console.log('GET /meals called');
   const meals = await fs.readFile('./data/available-meals.json', 'utf8');
   res.json(JSON.parse(meals));
 });
 
-app.post('/orders', async (req, res) => {
+app.post('/api/orders', async (req, res) => {
   const orderData = req.body.order;
 
   if (orderData === null || orderData.items === null || orderData.items.length === 0) {
@@ -68,6 +68,10 @@ app.use((req, res) => {
 });
 
 app.use(express.static('public'));
+
+app.use((req, res) => {
+  res.sendFile(path.resolve('public', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
